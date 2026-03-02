@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadística Matemática — Conceptos Base y Panorama del Curso</title>
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+    <style>
+        :root {
+            --bg: #fafaf9;
+            --card: #ffffff;
+            --text: #1c1917;
+            --muted: #78716c;
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+            --green: #16a34a;
+            --green-light: #dcfce7;
+            --orange: #ea580c;
+            --orange-light: #fff7ed;
+            --red: #dc2626;
+            --red-light: #fef2f2;
+            --border: #e7e5e4;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+            color: var(--accent);
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent);
+            color: var(--text);
+        }
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--accent);
+        }
+        p { margin-bottom: 1rem; }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .card.blue { border-left: 4px solid var(--accent); background: var(--accent-light); }
+        .card.green { border-left: 4px solid var(--green); background: var(--green-light); }
+        .card.orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
+        .card.red { border-left: 4px solid var(--red); background: var(--red-light); }
+        .card h4 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+        th, td {
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        th {
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+        }
+        tr:nth-child(even) { background: #f5f5f4; }
+        .formula-box {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.2rem 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .tree {
+            font-family: 'Courier New', monospace;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .badge.ok { background: var(--green-light); color: var(--green); }
+        .badge.no { background: var(--red-light); color: var(--red); }
+        .toc {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+        }
+        .toc ol { padding-left: 1.2rem; }
+        .toc li { margin: 0.3rem 0; }
+        .toc a { color: var(--accent); text-decoration: none; font-weight: 500; }
+        .toc a:hover { text-decoration: underline; }
+        .schedule td:first-child { font-weight: 700; color: var(--accent); white-space: nowrap; }
+        @media (max-width: 600px) {
+            body { padding: 1rem 0.5rem; }
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.3rem; }
+            .formula-box { font-size: 0.95rem; padding: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+<h1>Estadística Matemática</h1>
+<p class="subtitle">Conceptos Base y Panorama del Curso — Documento introductorio para empezar desde cero</p>
+
+<nav class="toc">
+    <strong>Contenido</strong>
+    <ol>
+        <li><a href="#p1">¿De qué va este curso?</a></li>
+        <li><a href="#p2">El lenguaje que necesitas</a></li>
+        <li><a href="#p3">El problema central — Estimación Puntual</a></li>
+        <li><a href="#p4">Los 5 criterios de calidad (el corazón del curso)</a></li>
+        <li><a href="#p5">Las distribuciones que usarás constantemente</a></li>
+        <li><a href="#p6">Mapa visual del curso</a></li>
+        <li><a href="#p7">Prerrequisitos</a></li>
+        <li><a href="#p8">¿Cómo usar este material?</a></li>
+    </ol>
+</nav>
+
+<!-- ===== PARTE 1 ===== -->
+<h2 id="p1">Parte 1: ¿De qué va este curso?</h2>
+
+<h3>La gran pregunta</h3>
+<p>Imagina que quieres saber la estatura promedio de todos los estudiantes universitarios de México. Son millones. No puedes medirlos a todos. Entonces mides a 100 y con eso intentas <strong>adivinar</strong> el promedio real.</p>
+
+<div class="card blue">
+    <h4>Estadística Matemática</h4>
+    <p>La ciencia de <strong>adivinar cosas sobre el todo, observando solo una parte</strong>, y además poder decir <strong>qué tan buena es tu adivinanza</strong>.</p>
+</div>
+
+<h3>Dos mundos</h3>
+<table>
+    <tr><th></th><th>Análisis Exploratorio</th><th>Inferencia Estadística</th></tr>
+    <tr><td><strong>¿Qué tienes?</strong></td><td>TODOS los datos</td><td>Solo una MUESTRA</td></tr>
+    <tr><td><strong>¿Tu descripción es...?</strong></td><td>Exacta</td><td>Aproximada</td></tr>
+    <tr><td><strong>Ejemplo</strong></td><td>Un censo de población</td><td>Una encuesta electoral</td></tr>
+</table>
+<p>El curso se centra en <strong>Inferencia Estadística</strong>: cómo pasar de una muestra a conclusiones sobre la población completa.</p>
+
+<!-- ===== PARTE 2 ===== -->
+<h2 id="p2">Parte 2: El lenguaje que necesitas</h2>
+
+<h3>La cadena fundamental</h3>
+<div class="card green">
+    <h4>Fenómeno → Atributo → Variable → Datos</h4>
+    <ul>
+        <li><strong>Atributo:</strong> lo que te interesa observar (ej: "estado de salud")</li>
+        <li><strong>Variable:</strong> cómo lo codificas numéricamente (ej: "presión arterial en mmHg")</li>
+        <li><strong>Dato:</strong> el número concreto que mides (ej: 120)</li>
+    </ul>
+</div>
+
+<h3>Notación que verás todo el semestre</h3>
+<table>
+    <tr><th>Símbolo</th><th>Significado</th></tr>
+    <tr><td>$X$</td><td>Variable aleatoria (lo que mides, <em>antes</em> de medir)</td></tr>
+    <tr><td>$x$</td><td>Dato concreto (lo que obtuviste al medir)</td></tr>
+    <tr><td>$X_1, X_2, \ldots, X_n$</td><td><strong>Muestra aleatoria</strong> (n copias independientes de X)</td></tr>
+    <tr><td>$x_1, x_2, \ldots, x_n$</td><td>Los datos observados</td></tr>
+    <tr><td>$\theta$</td><td>El <strong>parámetro</strong> desconocido (lo que quieres encontrar)</td></tr>
+    <tr><td>$\hat{\theta}$</td><td>Tu <strong>estimador</strong> del parámetro (tu adivinanza)</td></tr>
+    <tr><td>$f(x; \theta)$</td><td>Función de densidad/probabilidad (el modelo)</td></tr>
+    <tr><td>$n$</td><td>Tamaño de muestra</td></tr>
+</table>
+
+<h3>¿Qué es una muestra aleatoria?</h3>
+<p>Es una colección $X_1, X_2, \ldots, X_n$ de variables aleatorias que son:</p>
+<ul>
+    <li><strong>Independientes:</strong> medir una no afecta a las otras</li>
+    <li><strong>Idénticamente distribuidas (i.i.d.):</strong> todas siguen la misma distribución</li>
+</ul>
+
+<!-- ===== PARTE 3 ===== -->
+<h2 id="p3">Parte 3: El problema central — Estimación Puntual</h2>
+
+<h3>Setup</h3>
+<ol>
+    <li>Tienes una muestra aleatoria $X_1, \ldots, X_n$ de una distribución conocida (ej: Normal) pero con parámetro $\theta$ desconocido</li>
+    <li>Quieres <strong>estimar $\theta$</strong> usando los datos</li>
+</ol>
+
+<h3>Tu herramienta: la función estimadora</h3>
+<p>Un <strong>estimador</strong> es una fórmula que toma los datos y produce un número:</p>
+<div class="formula-box">
+    $\hat{\theta} = T(X_1, X_2, \ldots, X_n)$
+</div>
+<p>El ejemplo más básico: para estimar la media poblacional $\mu$, usas la <strong>media muestral</strong>:</p>
+<div class="formula-box">
+    $\hat{\mu} = \bar{X} = \dfrac{1}{n}\sum_{i=1}^{n} X_i$
+</div>
+
+<!-- ===== PARTE 4 ===== -->
+<h2 id="p4">Parte 4: Los 5 criterios de calidad</h2>
+<p style="font-size: 1.1rem; font-weight: 600; color: var(--accent);">El corazón del curso</p>
+
+<div class="card blue">
+    <h4>Criterio 1: Insesgamiento (Clase 5)</h4>
+    <p><em>"¿Tu estimador está centrado en el blanco?"</em></p>
+    <p>Un estimador es <strong>insesgado</strong> si en promedio da el valor correcto: $E[\hat{\theta}] = \theta$</p>
+    <p><strong>Analogía:</strong> si tiras flechas al blanco, el insesgamiento dice que <em>en promedio</em> le das al centro. Pero no dice nada de qué tan dispersas están.</p>
+</div>
+
+<div class="card orange">
+    <h4>Criterio 2: Error Cuadrático Medio — ECM (Clase 5)</h4>
+    <p><em>"¿Qué tan lejos caen tus flechas del centro?"</em></p>
+    <div class="formula-box">
+        $\text{ECM}(\hat{\theta}) = E[(\hat{\theta} - \theta)^2] = \text{Varianza} + \text{Sesgo}^2$
+    </div>
+    <p><strong>La fórmula más importante del curso.</strong> Un estimador sesgado pero con poca varianza puede ser mejor que uno insesgado pero muy disperso.</p>
+</div>
+
+<div class="card green">
+    <h4>Criterio 3: Consistencia en ECM (Clase 6)</h4>
+    <p><em>"¿Mejora tu estimador al tener más datos?"</em></p>
+    <p>$\text{ECM}(\hat{\theta}) \to 0$ cuando $n \to \infty$</p>
+    <p>Si obtienes más datos, tu estimador debería acercarse más al valor real.</p>
+</div>
+
+<div class="card blue">
+    <h4>Criterio 4: Suficiencia (Clases 8-9)</h4>
+    <p><em>"¿Tu estimador captura TODA la información de la muestra sobre θ?"</em></p>
+    <p>Se verifica con el <strong>Teorema de Factorización</strong>:</p>
+    <div class="formula-box">
+        $f(x^{(n)}; \theta) = g(T(x^{(n)}); \theta) \cdot h(x^{(n)})$
+    </div>
+</div>
+
+<div class="card red">
+    <h4>Criterio 5: MVUE — Optimalidad (Clase 10)</h4>
+    <p><em>"¿Es tu estimador el MEJOR posible entre todos los insesgados?"</em></p>
+    <p>La <strong>Cota Inferior de Cramér-Rao</strong> te dice cuál es la varianza mínima posible:</p>
+    <div class="formula-box">
+        $\text{Var}(\hat{\theta}) \geq \text{CICR}(\theta) = \dfrac{1}{n \cdot I(\theta)}$
+    </div>
+    <p>Si tu estimador alcanza esta cota, es el <strong>MVUE</strong> — el mejor posible.</p>
+</div>
+
+<!-- ===== PARTE 5 ===== -->
+<h2 id="p5">Parte 5: Las distribuciones que usarás constantemente</h2>
+
+<div class="card">
+    <h4>1. Bernoulli($\theta$) — la más simple</h4>
+    <p>X solo vale 0 o 1. $\theta = P(X=1)$. Piensa en lanzar una moneda.</p>
+    <div class="formula-box">$P(X = x) = \theta^x (1-\theta)^{1-x}, \quad x \in \{0, 1\}$</div>
+    <p>$E[X] = \theta$ &nbsp; | &nbsp; $\text{Var}(X) = \theta(1-\theta)$ &nbsp; | &nbsp; Estimador: $\hat{\theta} = \bar{X}$</p>
+</div>
+
+<div class="card">
+    <h4>2. Normal($\mu, \sigma^2$) — la más usada</h4>
+    <p>La campana de Gauss. Dos parámetros: media $\mu$ y varianza $\sigma^2$.</p>
+    <div class="formula-box">$f(x; \mu, \sigma^2) = \dfrac{1}{\sqrt{2\pi\sigma^2}} \exp\!\left(-\dfrac{(x-\mu)^2}{2\sigma^2}\right)$</div>
+    <p>$E[X] = \mu$ &nbsp; | &nbsp; $\text{Var}(X) = \sigma^2$ &nbsp; | &nbsp; Propiedad clave: $\bar{X} \sim N(\mu, \sigma^2/n)$</p>
+</div>
+
+<div class="card">
+    <h4>3. Poisson($\lambda$) — conteo de eventos</h4>
+    <p>Cuenta eventos raros (llamadas por hora, casos de influenza por semana).</p>
+    <div class="formula-box">$P(X = x) = \dfrac{\lambda^x}{x!} e^{-\lambda}, \quad x \in \{0, 1, 2, \ldots\}$</div>
+    <p>$E[X] = \text{Var}(X) = \lambda$ (¡son iguales!) &nbsp; | &nbsp; Estimador: $\hat{\lambda} = \bar{X}$</p>
+</div>
+
+<div class="card">
+    <h4>4. Exponencial($\theta$) — tiempos de espera</h4>
+    <p>Tiempo hasta que ocurre un evento.</p>
+    <div class="formula-box">$f(x; \theta) = \dfrac{1}{\theta} e^{-x/\theta}, \quad x > 0$</div>
+    <p>$E[X] = \theta$ &nbsp; | &nbsp; $\text{Var}(X) = \theta^2$</p>
+</div>
+
+<div class="card">
+    <h4>5. Uniforme(0, $\theta$) — soporte depende del parámetro</h4>
+    <p>Todos los valores entre 0 y θ igualmente probables.</p>
+    <div class="formula-box">$f(x; \theta) = \dfrac{1}{\theta}, \quad 0 < x < \theta$</div>
+    <p>$E[X] = \theta/2$ &nbsp; | &nbsp; $\text{Var}(X) = \theta^2/12$ &nbsp; | &nbsp; <span class="badge no">CICR no aplica</span> (soporte depende de θ)</p>
+</div>
+
+<!-- ===== PARTE 6 ===== -->
+<h2 id="p6">Parte 6: Mapa visual del curso (las 10 clases)</h2>
+
+<div class="tree">CLASE 1-2: ¿Qué es la Estadística?
+    │       Atributos → Variables → Datos
+    │       Exploratoria vs. Inferencia
+    │       Muestreo probabilístico → i.i.d.
+    │
+CLASE 3: Inferencia Paramétrica
+    │       Familias paramétricas ℱ_Θ
+    │       3 preguntas: Est. puntual / IC / Prueba de hipótesis
+    │
+CLASE 4: Estimación Puntual
+    │       Función estimadora T, valor estimado, analogía
+    │       Error de estimación ε = θ̂ − θ
+    │
+CLASE 5: Criterios de Calidad  ← FUNDAMENTAL
+    │       Insesgamiento, Sesgo, ECM = Var + Sesgo²
+    │       Consistencia en ECM
+    │
+CLASE 6: Ejemplo Normal (estimar σ²)
+    │       σ̂₁² vs σ̂₂²: el sesgado puede ganar en ECM
+    │       χ² con n y n−1 grados de libertad
+    │
+CLASE 7: Ejemplos Uniforme y Bernoulli
+    │       2X̄ vs X₍ₙ₎: el máximo muestral es mejor
+    │       Problemas con estimadores discretos
+    │
+CLASE 8: Suficiencia  ← CONCEPTO CLAVE
+    │       Definición por distribución condicional
+    │       Verificación en Bernoulli, Normal, Uniforme
+    │
+CLASE 9: Factorización de Fisher-Neyman  ← HERRAMIENTA CLAVE
+    │       f(x;θ) = g(T;θ) · h(x)
+    │       Suficiencia conjunta en Normal bivariada
+    │
+CLASE 10: Cramér-Rao y MVUE  ← EL GRAN FINAL
+            CICR(θ) = 1/[n·I(θ)]
+            Información de Fisher
+            4 expresiones equivalentes
+            Identificación del MVUE</div>
+
+<!-- ===== PARTE 7 ===== -->
+<h2 id="p7">Parte 7: Prerrequisitos — Lo que deberías saber</h2>
+
+<div class="card">
+    <h4>Probabilidad</h4>
+    <ul>
+        <li>Variables aleatorias discretas y continuas</li>
+        <li>Función de probabilidad y función de densidad</li>
+        <li>Esperanza $E[X]$, varianza $\text{Var}(X)$</li>
+        <li>Distribuciones: Bernoulli, Binomial, Poisson, Normal, Exponencial, Uniforme, χ²</li>
+        <li>Independencia de variables aleatorias</li>
+        <li>Función generadora de momentos</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h4>Cálculo</h4>
+    <ul>
+        <li>Derivadas e integrales</li>
+        <li>Sumas y series</li>
+        <li>Optimización (encontrar máximos/mínimos con derivadas)</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h4>Álgebra</h4>
+    <ul>
+        <li>Sumatorias y productorias</li>
+        <li>Logaritmos y exponenciales</li>
+    </ul>
+</div>
+
+<!-- ===== PARTE 8 ===== -->
+<h2 id="p8">Parte 8: ¿Cómo usar este material?</h2>
+
+<ol>
+    <li><strong>Lee este documento completo</strong> para tener el panorama general</li>
+    <li><strong>Ve clase por clase</strong> en orden (docs/clases/clase-01 hasta clase-10)</li>
+    <li><strong>Después de cada bloque</strong>, intenta resolver ejercicios relacionados</li>
+    <li><strong>Practica con exámenes pasados</strong> (docs/examenes/) — los patrones se repiten</li>
+    <li><strong>Usa la guía de estudio</strong> (docs/GUIA-DE-ESTUDIO.md) como referencia rápida</li>
+</ol>
+
+<h3>Plan de estudio sugerido</h3>
+<table class="schedule">
+    <tr><th>Día</th><th>Contenido</th><th>Ejercicios</th></tr>
+    <tr><td>Día 1</td><td>Clases 1-3 (conceptos fundacionales)</td><td>Definiciones del Parcial 1</td></tr>
+    <tr><td>Día 2</td><td>Clases 4-5 (estimación, ECM)</td><td>Ejercicios 1-3 de la lista</td></tr>
+    <tr><td>Día 3</td><td>Clase 6 (Normal, varianza)</td><td>Ejercicio 6 (área del círculo)</td></tr>
+    <tr><td>Día 4</td><td>Clase 7 (Uniforme, Bernoulli)</td><td>Ejercicios 4-5</td></tr>
+    <tr><td>Día 5</td><td>Clases 8-9 (suficiencia, factorización)</td><td>Ejercicios 10-11, 13-14</td></tr>
+    <tr><td>Día 6</td><td>Clase 10 (CICR, MVUE)</td><td>Ejercicios 7-9, 12</td></tr>
+    <tr><td>Día 7</td><td>Repaso con exámenes pasados</td><td>Parciales 1 completos</td></tr>
+</table>
+
+<div class="card green" style="margin-top: 2rem;">
+    <h4>Listo para empezar</h4>
+    <p>Con este panorama general, ya puedes ir a las clases individuales. Empieza por <strong>docs/clases/clase-01-introduccion.md</strong> y avanza en orden. Si te atoras, pregúntame y te lo explico como si fuera tu profesor.</p>
+</div>
+
+</div>
+</body>
+</html>
