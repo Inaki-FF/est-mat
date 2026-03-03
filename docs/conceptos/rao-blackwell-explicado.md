@@ -8,7 +8,7 @@ Tienes un estimador insesgado de θ, digamos δ(X). Funciona, pero tal vez su va
 
 Rao-Blackwell dice: **sí, condiciona sobre un estadístico suficiente y automáticamente obtienes algo igual o mejor.**
 
-$$\boxed{\delta^*(T) = E[\delta(X) \mid T] \quad \Longrightarrow \quad \text{Var}(\delta^*) \leq \text{Var}(\delta)}$$
+$$\boxed{\delta^{*}(T) = E[\delta(X) \mid T] \quad \Longrightarrow \quad \text{Var}(\delta^{*}) \leq \text{Var}(\delta)}$$
 
 Es decir, "exprimes" la información que ya tienes en T y descartas el ruido que no aporta.
 
@@ -38,16 +38,16 @@ Cualquier estimador con $E[\delta(X)] = \theta$ (o más general, $= \varphi(\the
 
 **Teorema (Rao-Blackwell).** Sea δ(X) un estimador insesgado de θ con varianza finita, y sea T un estadístico suficiente para θ. Define:
 
-$$\delta^*(T) = E[\delta(X) \mid T]$$
+$$\delta^{*}(T) = E[\delta(X) \mid T]$$
 
 Entonces:
 
-1. **δ\* es insesgado:** $E[\delta^*] = E[E[\delta \mid T]] = E[\delta] = \theta$ (por la ley de esperanza total)
+1. **δ\* es insesgado:** $E[\delta^{*}] = E[E[\delta \mid T]] = E[\delta] = \theta$ (por la ley de esperanza total)
 2. **δ\* tiene varianza menor o igual:**
 
-$$\text{Var}(\delta) = \text{Var}(E[\delta \mid T]) + E[\text{Var}(\delta \mid T)] = \text{Var}(\delta^*) + \underbrace{E[\text{Var}(\delta \mid T)]}_{\geq 0}$$
+$$\text{Var}(\delta) = \text{Var}(E[\delta \mid T]) + E[\text{Var}(\delta \mid T)] = \text{Var}(\delta^{*}) + \underbrace{E[\text{Var}(\delta \mid T)]}_{\geq 0}$$
 
-$$\Longrightarrow \text{Var}(\delta^*) \leq \text{Var}(\delta)$$
+$$\Longrightarrow \text{Var}(\delta^{*}) \leq \text{Var}(\delta)$$
 
 La igualdad vale si y solo si δ ya es función de T (es decir, no había nada que mejorar).
 
@@ -83,7 +83,7 @@ T es suficiente (por factorización de la densidad conjunta).
 
 ### Paso 3: Rao-Blackwellizar
 
-$$\delta^*(T) = E[\mathbb{1}(X_1 = 0) \mid T = t] = P(X_1 = 0 \mid T = t)$$
+$$\delta^{*}(T) = E[\mathbb{1}(X_1 = 0) \mid T = t] = P(X_1 = 0 \mid T = t)$$
 
 Necesitamos calcular esto. Dado que $T = t$, usamos que $X_1 \mid T = t$ tiene distribución Binomial:
 
@@ -91,7 +91,7 @@ $$P(X_1 = 0 \mid T = t) = P\left(\text{Bin}\left(t, \frac{1}{n}\right) = 0\right
 
 Entonces:
 
-$$\boxed{\delta^*(T) = \left(1 - \frac{1}{n}\right)^T}$$
+$$\boxed{\delta^{*}(T) = \left(1 - \frac{1}{n}\right)^T}$$
 
 ### Paso 4: Comparar varianzas
 
@@ -133,7 +133,7 @@ En las familias exponenciales (Normal, Poisson, Bernoulli, Gamma, etc.), el esta
 | Concepto | Fórmula | Intuición |
 |---|---|---|
 | Suficiencia | $f(\mathbf{x};\theta) = g(T,\theta) \cdot h(\mathbf{x})$ | "T captura toda la info sobre θ" |
-| Rao-Blackwell | $\delta^* = E[\delta \mid T]$ | "Condicionar sobre T elimina ruido" |
-| Mejora de varianza | $\text{Var}(\delta^*) \leq \text{Var}(\delta)$ | "Nunca empeoras, casi siempre mejoras" |
+| Rao-Blackwell | $\delta^{*} = E[\delta \mid T]$ | "Condicionar sobre T elimina ruido" |
+| Mejora de varianza | $\text{Var}(\delta^{*}) \leq \text{Var}(\delta)$ | "Nunca empeoras, casi siempre mejoras" |
 | Completitud | $E[g(T)] = 0 \;\forall\theta \Rightarrow g = 0$ | "No hay funciones ocultas de T" |
 | Lehmann-Scheffé | T suf. + completo → δ\* es MVUE | "El combo definitivo para encontrar el MVUE" |
