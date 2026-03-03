@@ -1,111 +1,135 @@
-# 3.4 Estimadores insesgados de mínima varianza
+# 3.4 Estimadores insesgados de mínima varianza (MVUE), Cramér–Rao y Rao–Blackwell–Lehmann–Scheffé
 
-## 1) ¿Qué es un estimador insesgado de mínima varianza (MVUE)?
+## 1) Marco: ¿qué problema resuelven estos teoremas?
 
-Para un parámetro (o función del parámetro) \(\tau(\theta)\), un estimador \(\hat\tau\) es **MVUE** si:
+Dado un modelo estadístico \(\{f(x;\theta):\theta\in\Theta\}\) y una cantidad objetivo
+\(\tau(\theta)\), buscamos un estimador \(\delta(X)\) que sea:
 
-1. Es insesgado: \(\mathbb{E}_\theta[\hat\tau]=\tau(\theta)\) para todo \(\theta\).
-2. Tiene varianza mínima entre todos los estimadores insesgados de \(\tau(\theta)\).
+1. **insesgado**: \(\mathbb E_\theta[\delta(X)] = \tau(\theta)\) para todo \(\theta\in\Theta\);
+2. de **varianza mínima** dentro de la clase de estimadores insesgados.
+
+Ese estimador se llama **MVUE** (Minimum Variance Unbiased Estimator).
 
 ---
 
-## 2) Teorema de Cramér–Rao (caso uniparametral)
+## 2) Teorema de Cramér–Rao (uniparametral)
 
-Sea \(X_1,\dots,X_n\) una m.a. con densidad/masa \(f(x;\theta)\), \(\theta\in\Theta\subset\mathbb{R}\), y suponga condiciones de regularidad. Si \(\hat\tau\) es insesgado para \(\tau(\theta)\), entonces:
-
-\[
-\mathrm{Var}_\theta(\hat\tau)\;\ge\;\frac{[\tau'(\theta)]^2}{nI(\theta)},
-\]
-
-con información de Fisher uniparametral:
+Sea \(X_1,\dots,X_n\) una muestra aleatoria i.i.d. de una familia uniparametral regular
+\(f(x;\theta)\), \(\theta\in\Theta\subset\mathbb R\). Si \(\delta(X)\) es insesgado para
+\(\tau(\theta)\) y se cumplen las condiciones de regularidad (derivar bajo el signo integral,
+soporte no dependiente de \(\theta\), etc.), entonces:
 
 \[
-I(\theta)=\mathbb{E}_\theta\!\left[\left(\frac{\partial}{\partial\theta}\log f(X;\theta)\right)^2\right]
-= -\mathbb{E}_\theta\!\left[\frac{\partial^2}{\partial\theta^2}\log f(X;\theta)\right].
+\operatorname{Var}_\theta(\delta)\;\ge\;\frac{[\tau'(\theta)]^2}{nI(\theta)},
 \]
 
-En particular, para \(\tau(\theta)=\theta\):
+donde la **información de Fisher por observación** es
 
 \[
-\mathrm{Var}_\theta(\hat\theta)\ge \frac{1}{nI(\theta)}.
+I(\theta)
+=\mathbb E_\theta\!\left[\left(\frac{\partial}{\partial\theta}\log f(X;\theta)\right)^2\right]
+=-\mathbb E_\theta\!\left[\frac{\partial^2}{\partial\theta^2}\log f(X;\theta)\right].
 \]
 
-### ¿Cómo se usa en ejercicios?
+Caso particular \(\tau(\theta)=\theta\):
+\[
+\operatorname{Var}_\theta(\hat\theta)\ge\frac{1}{nI(\theta)}.
+\]
 
-1. Identificar qué parámetro (o función \(\tau(\theta)\)) se estima.
+### Cuándo se alcanza la igualdad
+
+La igualdad (eficiencia) ocurre si existe una función \(a(\theta)\) tal que, c.s.,
+\[
+\delta(X)-\tau(\theta)
+= a(\theta)\,\frac{\partial}{\partial\theta}\log L(\theta;X),
+\]
+con \(L\) la verosimilitud muestral.
+
+### Cómo se usa en ejercicios
+
+1. Identificar \(\tau(\theta)\).
 2. Calcular \(I(\theta)\).
-3. Construir la cota \(\frac{[\tau'(\theta)]^2}{nI(\theta)}\).
-4. Si un estimador insesgado alcanza la cota, es eficiente (y candidato a MVUE).
+3. Armar la cota de Cramér–Rao.
+4. Comparar \(\operatorname{Var}(\delta)\) contra la cota para concluir eficiencia/no eficiencia.
 
 ---
 
 ## 3) Información de Fisher en el caso normal biparametral
 
-Si \(X_i\sim\mathcal N(\mu,\sigma^2)\) i.i.d. y ambos parámetros son desconocidos, el parámetro es vectorial
-\(\eta=(\mu,\sigma^2)\). La información de Fisher es matricial:
+Si \(X_i\sim\mathcal N(\mu,\sigma^2)\) i.i.d. y ambos parámetros son desconocidos, con
+\(\eta=(\mu,\sigma^2)\), la información de Fisher muestral es
 
 \[
-\mathcal I_n(\eta)=n\begin{pmatrix}
-\frac{1}{\sigma^2} & 0\\
-0 & \frac{1}{2\sigma^4}
+\mathcal I_n(\eta)
+= n\begin{pmatrix}
+\sigma^{-2} & 0\\
+0 & (2\sigma^{4})^{-1}
 \end{pmatrix}.
 \]
 
-La versión multivariada de Cramér–Rao dice que la matriz de covarianzas de cualquier estimador insesgado vectorial está acotada inferiormente por \(\mathcal I_n(\eta)^{-1}\) (en orden semidefinido positivo).
+La versión multivariada de Cramér–Rao establece, para estimadores insesgados vectoriales,
+\[
+\operatorname{Cov}_\eta(\hat\eta)-\mathcal I_n(\eta)^{-1}\succeq 0,
+\]
+(es decir, la diferencia es semidefinida positiva).
 
-### ¿Cómo se usa en práctica?
+### Lectura práctica
 
-- Para evaluar precisión mínima teórica de \(\hat\mu\), \(\widehat{\sigma^2}\), o combinaciones lineales.
-- Para justificar eficiencia asintótica de estimadores y comparar métodos.
+- Cota para \(\operatorname{Var}(\hat\mu)\): al menos \(\sigma^2/n\).
+- Cota para \(\operatorname{Var}(\widehat{\sigma^2})\): al menos \(2\sigma^4/n\).
+- Útil para comparar precisión teórica de procedimientos de estimación.
 
 ---
 
 ## 4) Teorema de Rao–Blackwell
 
-Sea \(\hat\tau_0\) un estimador insesgado de \(\tau(\theta)\) con varianza finita y sea \(T\) suficiente para \(\theta\). Defina:
+Sea \(\delta_0(X)\) un estimador insesgado de \(\tau(\theta)\) con varianza finita y sea
+\(T(X)\) suficiente para \(\theta\). Defina
 
 \[
-\hat\tau_1=\mathbb E[\hat\tau_0\mid T].
+\delta_1(X) = \mathbb E[\delta_0(X)\mid T(X)].
 \]
 
 Entonces:
 
-1. \(\hat\tau_1\) es estimador de \(\tau(\theta)\).
-2. \(\hat\tau_1\) es insesgado.
-3. \(\mathrm{Var}(\hat\tau_1)\le \mathrm{Var}(\hat\tau_0)\).
+1. \(\delta_1\) es función de \(T\) (por tanto, estadística).
+2. \(\delta_1\) es insesgado para \(\tau(\theta)\).
+3. \(\operatorname{Var}(\delta_1)\le \operatorname{Var}(\delta_0)\).
 
-### ¿Cómo se usa?
+### Uso operativo
 
-- Se parte de un insesgado “fácil”.
-- Se condiciona en una estadística suficiente.
-- Se obtiene automáticamente un estimador no peor en varianza.
+- Arrancas con un insesgado sencillo \(\delta_0\).
+- Condicionas sobre una suficiente \(T\).
+- Obtienes automáticamente un insesgado con varianza no mayor.
 
 ---
 
 ## 5) Teorema de Lehmann–Scheffé
 
-Si \(T\) es **completa y suficiente** para \(\theta\), y \(g(T)\) es insesgado para \(\tau(\theta)\), entonces \(g(T)\) es el **único MVUE** de \(\tau(\theta)\).
+Si \(T(X)\) es **completa y suficiente** para \(\theta\), y \(g(T)\) es insesgado para
+\(\tau(\theta)\), entonces \(g(T)\) es el **único MVUE** de \(\tau(\theta)\).
 
-### ¿Qué significan “completa” y “suficiencia minimal”?
+### Definiciones formales relevantes
 
-- **Suficiente:** \(T\) concentra toda la información sobre \(\theta\).
-- **Minimal suficiente:** es suficiente y cualquier otra suficiente lo contiene funcionalmente.
-- **Completa:** si \(\mathbb E_\theta[h(T)]=0\) para todo \(\theta\), entonces \(h(T)=0\) casi seguro.
+- **Suficiencia:** la distribución condicional de la muestra dado \(T=t\) no depende de \(\theta\).
+- **Completitud:** si para toda función medible \(h\),
+  \(\mathbb E_\theta[h(T)]=0\ \forall\theta\Rightarrow h(T)=0\) c.s.
+- **Suficiencia minimal:** \(T\) es suficiente y cualquier otra suficiente \(S\) determina a \(T\)
+  (existe \(u\) tal que \(T=u(S)\) c.s.).
 
-### ¿Cómo se usa en ejercicios?
+### Uso operativo
 
-Ruta estándar:
-
-1. Encontrar una estadística suficiente (idealmente minimal) por factorización.
-2. Verificar/comentar completitud (en familias exponenciales es frecuente).
+1. Hallar una suficiente (típicamente por factorización de Fisher–Neyman).
+2. Establecer minimalidad/completitud cuando aplique.
 3. Construir un insesgado de la forma \(g(T)\).
-4. Concluir por Lehmann–Scheffé que es el MVUE único.
+4. Invocar Lehmann–Scheffé para concluir MVUE y unicidad.
 
 ---
 
-## 6) Mapa rápido de decisión en problemas de examen
+## 6) Flujo rápido para problemas tipo examen
 
-1. ¿Piden “cota”, “eficiencia”, “varianza mínima teórica”?  \(\Rightarrow\) Cramér–Rao.
-2. ¿Ya tienes un insesgado y una suficiente?  \(\Rightarrow\) Rao–Blackwell.
-3. ¿Además la suficiente es completa?  \(\Rightarrow\) Lehmann–Scheffé (MVUE único).
+1. **“Piden cota o eficiencia”** \(\Rightarrow\) Cramér–Rao.
+2. **“Tengo un insesgado + suficiente”** \(\Rightarrow\) Rao–Blackwell.
+3. **“Además la suficiente es completa”** \(\Rightarrow\) Lehmann–Scheffé (MVUE único).
+4. **“Modelo con dos parámetros (ej. Normal \(\mu,\sigma^2\))”** \(\Rightarrow\) usar Fisher matricial y Cramér–Rao multivariado.
 
